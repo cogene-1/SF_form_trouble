@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- タイトルを修正 -->
     <title>Salesforce突発入力フォーム</title>
     
     <!-- カレンダー・時計表示用の外部機能（Flatpickr）を読み込み -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
-
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -126,12 +124,10 @@
     </style>
 </head>
 <body>
-
 <div class="container">
     <!-- タイトルと注意書き -->
     <h2>Salesforce突発入力フォーム</h2>
     <p class="warning-text">※更新すると内容がリセットされます</p>
-
     <form id="sfForm">
         <!-- 顧客選択 -->
         <fieldset>
@@ -141,7 +137,6 @@
                 <input type="text" id="customer_name" placeholder="顧客名を入力">
             </div>
         </fieldset>
-
         <!-- ケース -->
         <fieldset>
             <legend>ケース</legend>
@@ -178,12 +173,10 @@
                 <input type="text" id="category" value="修理・点検" readonly>
             </div>
             <div class="form-group">
-                <!-- 項目名修正 -->
                 <label for="details">⑧問合せ内容（ブランクでも可）</label>
                 <textarea id="details" placeholder="問合せ内容を入力"></textarea>
             </div>
             <div class="form-group">
-                <!-- 項目名修正 -->
                 <label for="account">⑨取引先（設置先）</label>
                 <input type="text" id="account" placeholder="取引先を入力">
             </div>
@@ -193,7 +186,8 @@
             </div>
             <div class="form-group">
                 <label for="handover">⑪引継ぎ先</label>
-                <select id="source">
+                <!-- 修正：はみ出ていたoptionをselect内に格納し、重複していたidをhandoverに修正 -->
+                <select id="handover">
                     <option value="">選択してください</option>
                     <option value="CF部CGS1T1G">CF部CGS1T1G</option>
                     <option value="CF部CGS1T2G">CF部CGS1T2G</option>
@@ -207,12 +201,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <!-- 項目名修正 -->
                 <label for="equip_info">⑬機器情報（号機など）</label>
                 <input type="text" id="equip_info" placeholder="機器情報を入力">
             </div>
         </fieldset>
-
         <!-- 作業指示 -->
         <fieldset>
             <legend>作業指示</legend>
@@ -222,9 +214,9 @@
                     <option value="">選択してください</option>
                     <option value="CGS1T　1G">CGS1T　1G</option>
                     <option value="CGS1T　2G">CGS1T　2G</option>
-                    <option value="OGFA　CGS1T大阪">OGFA　CGS1T大阪</option>
                     <option value="鴻池運輸　大阪">鴻池運輸　大阪</option>
                     <option value="川惣電機工業 南部">川惣電機工業 南部</option>
+                    <option value="OGFA　CGS1T大阪">OGFA　CGS1T大阪</option>
                 </select>
             </div>
             <div class="form-group">
@@ -248,13 +240,11 @@
                 <input type="text" id="maintenance_person" placeholder="メンテ担当者を入力">
             </div>
         </fieldset>
-
         <div class="btn-container">
             <button type="button" onclick="generateMail()">メールを起動して送信準備</button>
         </div>
     </form>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         flatpickr(".date-picker", {
@@ -262,7 +252,6 @@
             dateFormat: "Y/m/d",
             allowInput: true
         });
-
         flatpickr(".time-picker", {
             enableTime: true,
             noCalendar: true,
@@ -271,7 +260,6 @@
             allowInput: true
         });
     });
-
     function generateMail() {
         const v = (id) => document.getElementById(id).value;
         
@@ -283,11 +271,10 @@
             if (t) return t;
             return "";
         };
-
         const failure_dt = formatDateTime('failure_date_d', 'failure_date_t');
         const visit_dt = formatDateTime('visit_date_d', 'visit_date_t');
         
-        // メールの本文（テキスト化時の項目名も修正）
+        // 修正：不要なエスケープ文字（\）を排除してテンプレート文字列を正常化
         let mailBody = "【顧客選択】\r\n";
         mailBody += `①顧客名: ${v('customer_name')}\r\n\r\n`;
         
@@ -312,8 +299,7 @@
         mailBody += `⑰どの機器か・・・: ${v('which_equip')}\r\n`;
         mailBody += `⑱作業指示: ${v('work_order')}\r\n`;
         mailBody += `⑲メンテ担当者: ${v('maintenance_person')}\r\n`;
-
-        // 件名も変更しています
+        
         const encodedSubject = encodeURIComponent('Salesforce突発入力データ');
         const encodedBody = encodeURIComponent(mailBody);
         const mailtoLink = `mailto:?subject=${encodedSubject}&body=${encodedBody}`;
@@ -326,6 +312,5 @@
         document.body.removeChild(link);
     }
 </script>
-
 </body>
 </html>
