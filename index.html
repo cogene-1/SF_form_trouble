@@ -299,6 +299,15 @@
         mailBody += `⑰どの機器か・・・: ${v('which_equip')}\r\n`;
         mailBody += `⑱作業指示: ${v('work_order')}\r\n`;
         mailBody += `⑲メンテ担当者: ${v('maintenance_person')}\r\n`;
+      <div class="form-group">
+      <label for="source">⑳承認申請の依頼先</label>
+                <select id="source">
+                    <option value="">選択してください</option>
+                    <option value="チーフ">チーフ</option>
+                    <option value="リーダー">リーダー</option>
+                    <option value="担当者（依頼者本人）">担当者（依頼者本人）</option>
+                </select>
+    　</div>
         
         const encodedSubject = encodeURIComponent('Salesforce突発入力データ');
         const encodedBody = encodeURIComponent(mailBody);
