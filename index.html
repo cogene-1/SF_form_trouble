@@ -239,6 +239,15 @@
                 <label for="maintenance_person">⑲メンテ担当者</label>
                 <input type="text" id="maintenance_person" placeholder="メンテ担当者を入力">
             </div>
+        　  <div class="form-group">
+                <label for="handover">⑳承認申請の依頼先</label>
+                <select id="handover">
+                    <option value="">選択してください</option>
+                    <option value="チーフ">チーフ</option>
+                    <option value="リーダー">リーダー</option>
+                    <option value="メンテ担当者（依頼者本人）">メンテ担当者（依頼者本人）</option>
+                </select>
+            </div>
         </fieldset>
         <div class="btn-container">
             <button type="button" onclick="generateMail()">メールを起動して送信準備</button>
@@ -299,15 +308,6 @@
         mailBody += `⑰どの機器か・・・: ${v('which_equip')}\r\n`;
         mailBody += `⑱作業指示: ${v('work_order')}\r\n`;
         mailBody += `⑲メンテ担当者: ${v('maintenance_person')}\r\n`;
-      <div class="form-group">
-      <label for="source">⑳承認申請の依頼先</label>
-                <select id="source">
-                    <option value="">選択してください</option>
-                    <option value="チーフ">チーフ</option>
-                    <option value="リーダー">リーダー</option>
-                    <option value="担当者（依頼者本人）">担当者（依頼者本人）</option>
-                </select>
-    　</div>
         
         const encodedSubject = encodeURIComponent('Salesforce突発入力データ');
         const encodedBody = encodeURIComponent(mailBody);
