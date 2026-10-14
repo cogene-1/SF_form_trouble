@@ -308,7 +308,7 @@
         mailBody += `⑰どの機器か・・・: ${v('which_equip')}\r\n`;
         mailBody += `⑱作業指示: ${v('work_order')}\r\n`;
         mailBody += `⑲メンテ担当者: ${v('maintenance_person')}\r\n`;
-        mailBody += `⑳承認申請の依頼先: ${v('maintenance_person')}\r\n`;
+        mailBody += `⑳承認申請の依頼先: ${v('approval_request')}\r\n`;
         
         const encodedSubject = encodeURIComponent('Salesforce突発入力データ');
         const encodedBody = encodeURIComponent(mailBody);
